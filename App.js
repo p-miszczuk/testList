@@ -30,7 +30,7 @@ class App extends React.Component {
   }
 
   render() {
-    const {isLoading, error} = this.state
+    const {isLoading, data} = this.state
 
     if (isLoading) 
       return (
@@ -39,14 +39,14 @@ class App extends React.Component {
         </View>
       )
 
-    if (error) {
-      <View><Text>{error}</Text></View>
-    }
-
     return (
       <View style={styles.body}>
         <View style={styles.containerList}>
-          <Item />
+         {
+           data.map(item => (
+             <Item key={item.id} id={item.id} author={item.author} url={item.url} image={item.download_url} />
+           ))
+         }         
         </View>
         <View style={styles.containerButtons}>
           <Buttons />
@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
     color: Colors.black,
     flex: 1,
     alignItems: 'center',
-    padding: 10,
   },
   containerSpinner: {
     flex: 1,
@@ -71,13 +70,17 @@ const styles = StyleSheet.create({
   },
   containerList: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: 'column',
+    width: '95%'
   },
   containerButtons: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: '100%',
-    marginVertical: 3,
+    paddingVertical: 10,
+    backgroundColor: Colors.white,
+    borderTopWidth: 1,
+    borderColor: 'blue'
   },
 });
 

@@ -2,20 +2,20 @@ import React from 'react';
 import {StyleSheet, View, Text, Image} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
-const Item = () => {
+const Item = ({id, author, url, image}) => {
   return (
     <View style={styles.container}>
       <Image
         style={styles.image}
-        // source={require('@expo/snack-static/react-native-logo.png')}
+        source={{uri: `${image}`}}
       />
       <View style={styles.content}>
         <View style={styles.header}>
-          <Text style={styles.name}>Header</Text>
-          <Text style={styles.number}>100</Text>
+          <Text style={styles.name}>{`${author}`}</Text>
+          <Text style={styles.number}>{`${id}`}</Text>
         </View>
         <View>
-          <Text>link</Text>
+          <Text>{`${url}`}</Text>
         </View>
       </View>
     </View>
@@ -38,7 +38,7 @@ const styles = StyleSheet.create({
   image: {
     width: 50,
     height: 50,
-    backgroundColor: 'red',
+    backgroundColor: '#ccc',
     borderRadius: 6,
   },
   content: {
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'blue',
     borderRadius: 50,
     color: '#fff',
-    fontSize: 12,
+    fontSize: 10,
   },
 });
 
