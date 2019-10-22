@@ -1,24 +1,17 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-
 import React from 'react';
 import {StyleSheet, View, Text} from 'react-native';
-
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+import Item from './components/Items/Item';
+import Buttons from './components/Buttons/Buttons';
 
 const App = () => {
   return (
     <View style={styles.body}>
       <View style={styles.containerList}>
-        <Text>Test</Text>
+        <Item />
       </View>
-      <View>
-        <Text>Buttons</Text>
+      <View style={styles.containerButtons}>
+        <Buttons />
       </View>
     </View>
   );
@@ -30,11 +23,18 @@ const styles = StyleSheet.create({
     color: Colors.black,
     flex: 1,
     alignItems: 'center',
+    padding: 10,
   },
   containerList: {
     flex: 1,
+    flexDirection: 'row',
   },
-  containerButton: {},
+  containerButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginVertical: 3,
+  },
 });
 
 export default App;
