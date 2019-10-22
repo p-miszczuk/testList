@@ -1,5 +1,5 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image, Alert, Linking} from 'react-native';
+import {StyleSheet, View, Text, Image, Linking} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const handleOpenUrl = url => {
@@ -19,7 +19,7 @@ const Item = ({id, author, url, image}) => {
           <Text style={styles.number}>{`${id}`}</Text>
         </View>
         <View>
-          <Text onPress={() => handleOpenUrl(url)}>{`${url}`}</Text>
+          <Text style={styles.link} onPress={() => handleOpenUrl(url)}>{`${url}`}</Text>
         </View>
       </View>
     </View>
@@ -57,17 +57,21 @@ const styles = StyleSheet.create({
   },
   name: {
     fontSize: 16,
-    fontWeight: '800',
+    fontWeight: 'bold',
   },
   number: {
     width: 25,
     height: 25,
     lineHeight: 25,
+    textAlign: 'center',
     backgroundColor: 'blue',
     borderRadius: 50,
     color: '#fff',
     fontSize: 10,
   },
+  link: {
+    fontSize: 12
+  }
 });
 
 export default Item;
