@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import { StyleSheet, View, Text, ActivityIndicator, Alert } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Item from './components/Items/Item';
 import Buttons from './components/Buttons/Buttons';
@@ -8,7 +8,22 @@ class App extends React.Component {
 
   state = {
     isLoading: true,
-    data: []
+    data: [],
+    sortById: false,
+    sortByAuthor: false
+  }
+
+  handleFetchData = () => {
+    this.setState({isLoading: true, sortById: false, sortByAuthor: false})
+    this.fetchData()
+  }
+
+  handleSortById = () => {
+    this.setState({sortById: true, sortByAuthor: false})
+  }
+
+  handleSortByName = () => {
+    this.setState({sortById: false, sortByAuthor: true})
   }
 
   componentDidMount() {
@@ -30,12 +45,12 @@ class App extends React.Component {
   }
 
   render() {
-    const {isLoading, data} = this.state
+    const {isLoading, data, sortById, sortByAuthor} = this.state
 
     if (isLoading) 
       return (
         <View style={styles.containerSpinner}>
-          <ActivityIndicator />
+          <ActivityIndicator color="blue" size="large" />
         </View>
       )
 
@@ -43,13 +58,29 @@ class App extends React.Component {
       <View style={styles.body}>
         <View style={styles.containerList}>
          {
-           data.map(item => (
-             <Item key={item.id} id={item.id} author={item.author} url={item.url} image={item.download_url} />
-           ))
+          sortByAuthor ? 
+            data
+            .sort((id1, id2) => (id1.author > id2.author))
+            .map(item => (
+              <Item key={item.id} id={item.id} author={item.author} url={item.url} image={item.download_url} />
+            )) :
+          sortById ?
+            data
+            .sort((id1, id2) => (id1.id > id2.id))
+            .map(item => (
+              <Item key={item.id} id={item.id} author={item.author} url={item.url} image={item.download_url} />
+            )) :
+          data.map(item => (
+            <Item key={item.id} id={item.id} author={item.author} url={item.url} image={item.download_url} />
+          ))
          }         
         </View>
         <View style={styles.containerButtons}>
-          <Buttons />
+          <Buttons 
+            handleFetchData={this.handleFetchData}
+            handleSortByName={this.handleSortByName}
+            handleSortById={this.handleSortById}
+          />
         </View>
       </View>
     );

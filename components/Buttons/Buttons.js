@@ -3,18 +3,29 @@ import {StyleSheet, Alert} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MainButton from './Button';
 
-const Buttons = () => {
+const Buttons = ({handleFetchData, handleSortById, handleSortByName}) => {
   const btnsText = ['Refresh list', 'Sort by author', 'Sort by id'];
   return (
     <>
-      {btnsText.map(item => (
         <MainButton
-          key={item}
-          text={item}
+          onPress={handleFetchData}
+          text={btnsText[0]}
           buttonText={styles.buttonText}
           customBtn={styles.btn}
         />
-      ))}
+        <MainButton
+          onPress={handleSortByName}
+          text={btnsText[1]}
+          buttonText={styles.buttonText}
+          customBtn={styles.btn}
+        />
+        <MainButton
+          onPress={handleSortById}
+          text={btnsText[2]}
+          buttonText={styles.buttonText}
+          customBtn={styles.btn}
+        />
+   
     </>
   );
 };
@@ -24,7 +35,7 @@ const styles = StyleSheet.create({
     width: 100,
     backgroundColor: 'blue',
     paddingHorizontal: 5,
-    paddingVertical: 10,
+    paddingVertical: 15,
     borderRadius: 5,
   },
   buttonText: {

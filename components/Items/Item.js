@@ -1,6 +1,10 @@
 import React from 'react';
-import {StyleSheet, View, Text, Image} from 'react-native';
+import {StyleSheet, View, Text, Image, Alert, Linking} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
+
+const handleOpenUrl = url => {
+   Linking.openURL(`${url}`).catch(error => console.log(error))
+}
 
 const Item = ({id, author, url, image}) => {
   return (
@@ -15,7 +19,7 @@ const Item = ({id, author, url, image}) => {
           <Text style={styles.number}>{`${id}`}</Text>
         </View>
         <View>
-          <Text>{`${url}`}</Text>
+          <Text onPress={() => handleOpenUrl(url)}>{`${url}`}</Text>
         </View>
       </View>
     </View>
