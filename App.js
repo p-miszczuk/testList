@@ -1,7 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Item from './components/Items/Item';
+import Items from './components/Items/Items'
 import Buttons from './components/Buttons/Buttons';
 
 class App extends React.Component {
@@ -47,33 +47,17 @@ class App extends React.Component {
   render() {
     const {isLoading, data, sortById, sortByAuthor} = this.state
 
-    if (isLoading) 
-      return (
-        <View style={styles.containerSpinner}>
-          <ActivityIndicator color="blue" size="large" />
-        </View>
-      )
+    sortByAuthor && data.sort((item1,item2) => item1.author > item2.author)
+    sortById && data.sort((item1,item2) => item1.id > item2.id)
 
     return (
       <View style={styles.body}>
-        <View style={styles.containerList}>
+        <View style={isLoading ? styles.containerSpinner : styles.containerList}>
          {
-          sortByAuthor ? 
-            data
-            .sort((id1, id2) => (id1.author > id2.author))
-            .map(item => (
-              <Item key={item.id} id={item.id} author={item.author} url={item.url} image={item.download_url} />
-            )) :
-          sortById ?
-            data
-            .sort((id1, id2) => (id1.id > id2.id))
-            .map(item => (
-              <Item key={item.id} id={item.id} author={item.author} url={item.url} image={item.download_url} />
-            )) :
-          data.map(item => (
-            <Item key={item.id} id={item.id} author={item.author} url={item.url} image={item.download_url} />
-          ))
-         }         
+            isLoading ? 
+              <ActivityIndicator color="blue" size="large" /> : 
+              <Items sortById={sortById} sortByAuthor={sortByAuthor} data={data}/>
+         }
         </View>
         <View style={styles.containerButtons}>
           <Buttons 
