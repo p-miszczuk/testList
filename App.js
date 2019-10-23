@@ -39,16 +39,21 @@ const App = () => {
     fetchData();
   }, []);
 
-  sorts.author && data.sort((item1, item2) => item1.author > item2.author);
-  sorts.id && data.sort((item1, item2) => item1.id > item2.id);
-
   return (
     <View style={styles.body}>
       <View style={isLoading ? styles.containerSpinner : styles.containerList}>
         {isLoading ? (
           <ActivityIndicator color="blue" size="large" />
         ) : (
-          <Items data={data} />
+          <Items
+            data={
+              sorts.author
+                ? data.sort((item1, item2) => item1.author > item2.author)
+                : sorts.id
+                ? data.sort((item1, item2) => item1.id > item2.id)
+                : data
+            }
+          />
         )}
       </View>
       <Buttons
