@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
   containerList: {
     flex: 1,
     flexDirection: 'column',
-    width: '95%'
+    width: '98%',
   },
   containerButtons: {
     flexDirection: 'row',
