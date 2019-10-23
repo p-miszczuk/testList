@@ -1,74 +1,63 @@
-import React from 'react';
-import { StyleSheet, View, Text, ActivityIndicator } from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View, ActivityIndicator} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Items from './components/Items/Items'
+import Items from './components/Items/Items';
 import Buttons from './components/Buttons/Buttons';
 
-class App extends React.Component {
+const App = () => {
+  const [isLoading, setLoading] = useState(true);
+  const [sorts, setSorts] = useState({id: false, author: false});
+  const [data, setData] = useState(null);
 
-  state = {
-    isLoading: true,
-    data: [],
-    sortById: false,
-    sortByAuthor: false
-  }
+  const handleFetchData = () => {
+    setSorts({id: false, author: false});
+    setLoading(true);
+    fetchData();
+  };
 
-  handleFetchData = () => {
-    this.setState({isLoading: true, sortById: false, sortByAuthor: false})
-    this.fetchData()
-  }
+  const handleSortById = () => {
+    setSorts({id: true, author: false});
+  };
 
-  handleSortById = () => {
-    this.setState({sortById: true, sortByAuthor: false})
-  }
+  const handleSortByName = () => {
+    setSorts({id: false, author: true});
+  };
 
-  handleSortByName = () => {
-    this.setState({sortById: false, sortByAuthor: true})
-  }
-
-  componentDidMount() {
-    this.fetchData()
-  }
-
-  fetchData = () => {
+  async function fetchData() {
     fetch('https://picsum.photos/v2/list')
-    .then(resp => resp.json())
-    .then(resp => {
-      this.setState({
-        data: [...resp],
-        isLoading: false
+      .then(resp => resp.json())
+      .then(resp => {
+        setLoading(false);
+        setData([...resp]);
       })
-    })
-    .catch(error => {
-      console.log(error)
-    })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
-  render() {
-    const {isLoading, data, sortById, sortByAuthor} = this.state
+  useEffect(() => {
+    fetchData();
+  }, []);
 
-    sortByAuthor && data.sort((item1,item2) => item1.author > item2.author)
-    sortById && data.sort((item1,item2) => item1.id > item2.id)
+  sorts.author && data.sort((item1, item2) => item1.author > item2.author);
+  sorts.id && data.sort((item1, item2) => item1.id > item2.id);
 
-    return (
-      <View style={styles.body}>
-        <View style={isLoading ? styles.containerSpinner : styles.containerList}>
-         {
-            isLoading ? 
-              <ActivityIndicator color="blue" size="large" /> :
-              <Items data={data} />
-         }
-        </View>
-        
-        <Buttons 
-          handleFetchData={this.handleFetchData}
-          handleSortByName={this.handleSortByName}
-          handleSortById={this.handleSortById}
-        />
-        
+  return (
+    <View style={styles.body}>
+      <View style={isLoading ? styles.containerSpinner : styles.containerList}>
+        {isLoading ? (
+          <ActivityIndicator color="blue" size="large" />
+        ) : (
+          <Items data={data} />
+        )}
       </View>
-    );
-  }
+      <Buttons
+        handleFetchData={handleFetchData}
+        handleSortByName={handleSortByName}
+        handleSortById={handleSortById}
+      />
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -81,7 +70,7 @@ const styles = StyleSheet.create({
   containerSpinner: {
     flex: 1,
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   containerList: {
     flex: 1,
