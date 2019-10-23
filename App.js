@@ -55,17 +55,17 @@ class App extends React.Component {
         <View style={isLoading ? styles.containerSpinner : styles.containerList}>
          {
             isLoading ? 
-              <ActivityIndicator color="blue" size="large" /> : 
-              <Items sortById={sortById} sortByAuthor={sortByAuthor} data={data}/>
+              <ActivityIndicator color="blue" size="large" /> :
+              <Items data={data} />
          }
         </View>
-        <View style={styles.containerButtons}>
-          <Buttons 
-            handleFetchData={this.handleFetchData}
-            handleSortByName={this.handleSortByName}
-            handleSortById={this.handleSortById}
-          />
-        </View>
+        
+        <Buttons 
+          handleFetchData={this.handleFetchData}
+          handleSortByName={this.handleSortByName}
+          handleSortById={this.handleSortById}
+        />
+        
       </View>
     );
   }
@@ -87,15 +87,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     width: '98%',
-  },
-  containerButtons: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    paddingVertical: 10,
-    backgroundColor: Colors.white,
-    borderTopWidth: 1,
-    borderColor: 'blue'
   },
 });
 
