@@ -4,24 +4,23 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 import MainButton from './Button';
 
 const Buttons = ({handleFetchData, handleSortById, handleSortByName}) => {
-  const btnsText = ['Refresh list', 'Sort by author', 'Sort by id'];
   return (
     <>
         <MainButton
           onPress={handleFetchData}
-          text={btnsText[0]}
+          text="Refresh list"
           buttonText={styles.buttonText}
           customBtn={styles.btn}
         />
         <MainButton
           onPress={handleSortByName}
-          text={btnsText[1]}
+          text="Sort by author"
           buttonText={styles.buttonText}
           customBtn={styles.btn}
         />
         <MainButton
           onPress={handleSortById}
-          text={btnsText[2]}
+          text="Sort by id"
           buttonText={styles.buttonText}
           customBtn={styles.btn}
         />
