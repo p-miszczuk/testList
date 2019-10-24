@@ -5,25 +5,25 @@ import Items from './components/Items/Items';
 import Buttons from './components/Buttons/Buttons';
 
 const App = () => {
-  const [isLoading, setLoading] = useState(true);
-  const [sorts, setSorts] = useState({id: false, author: false});
+  const [isLoading, setLoading] = useState(false);
   const [data, setData] = useState(null);
 
   const handleFetchData = () => {
-    setSorts({id: false, author: false});
-    setLoading(true);
     fetchData();
   };
 
   const handleSortById = () => {
-    setSorts({id: true, author: false});
+    data.sort((a, b) => (parseInt(a.id, 10) > parseInt(b.id, 10) ? 1 : -1));
+    setData([...data]);
   };
 
   const handleSortByName = () => {
-    setSorts({id: false, author: true});
+    data.sort((item1, item2) => (item1.author > item2.author ? 1 : -1));
+    setData([...data]);
   };
 
   async function fetchData() {
+    setLoading(true);
     fetch('https://picsum.photos/v2/list')
       .then(resp => resp.json())
       .then(resp => {
@@ -45,15 +45,7 @@ const App = () => {
         {isLoading ? (
           <ActivityIndicator color="blue" size="large" />
         ) : (
-          <Items
-            data={
-              sorts.author
-                ? data.sort((item1, item2) => item1.author > item2.author)
-                : sorts.id
-                ? data.sort((item1, item2) => item1.id > item2.id)
-                : data
-            }
-          />
+          <Items data={data} />
         )}
       </View>
       <Buttons

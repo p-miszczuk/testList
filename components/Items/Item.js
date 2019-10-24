@@ -1,25 +1,23 @@
 import React from 'react';
 import {StyleSheet, View, Text, Image, Linking} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 const handleOpenUrl = url => {
-   Linking.openURL(`${url}`).catch(error => console.log(error))
-}
+  Linking.openURL(`${url}`).catch(error => console.log(error));
+};
 
 const Item = ({id, author, url, image}) => {
   return (
     <View style={styles.container}>
-      <Image
-        style={styles.image}
-        source={{uri: `${image}`}}
-      />
+      <Image style={styles.image} source={{uri: `${image}`}} />
       <View style={styles.content}>
         <View style={styles.header}>
           <Text style={styles.name}>{`${author}`}</Text>
           <Text style={styles.number}>{`${id}`}</Text>
         </View>
         <View>
-          <Text style={styles.link} onPress={() => handleOpenUrl(url)}>{`${url}`}</Text>
+          <Text
+            style={styles.link}
+            onPress={() => handleOpenUrl(url)}>{`${url}`}</Text>
         </View>
       </View>
     </View>
@@ -70,8 +68,8 @@ const styles = StyleSheet.create({
     fontSize: 10,
   },
   link: {
-    fontSize: 12
-  }
+    fontSize: 12,
+  },
 });
 
 export default Item;

@@ -1,6 +1,5 @@
 import React from 'react';
-import {TouchableOpacity, View, Text} from 'react-native';
-import {Colors} from 'react-native/Libraries/NewAppScreen';
+import {TouchableOpacity, Text} from 'react-native';
 
 const MainButton = ({text, buttonText, customBtn, onPress}) => {
   return (

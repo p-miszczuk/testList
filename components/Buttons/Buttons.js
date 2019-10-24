@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     backgroundColor: Colors.white,
     borderTopWidth: 1,
-    borderColor: 'blue'
+    borderColor: 'blue',
   },
   btn: {
     width: 100,
